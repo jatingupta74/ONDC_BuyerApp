@@ -108,9 +108,11 @@ const Header = () => {
                 </div>
               </div>
             ) : (
-              <Button size="sm">
-                Sign In
-              </Button>
+              <Link to="/login">
+                <Button size="sm">
+                  Sign In
+                </Button>
+              </Link>
             )}
           </div>
 
@@ -189,9 +191,11 @@ const Header = () => {
                 </button>
               </>
             ) : (
-              <Button className="w-full mt-2" onClick={() => setIsMenuOpen(false)}>
-                Sign In
-              </Button>
+              <Link to="/login" className="w-full" onClick={() => setIsMenuOpen(false)}>
+                <Button className="w-full mt-2">
+                  Sign In
+                </Button>
+              </Link>
             )}
           </div>
         </div>
