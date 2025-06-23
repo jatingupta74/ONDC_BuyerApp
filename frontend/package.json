@@ -1,0 +1,41 @@
+{
+  "name": "ondc-buyer-app-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "lucide-react": "^0.0.0", // Version placeholder, check actual
+    "react": "^18.0.0", // Version placeholder
+    "react-dom": "^18.0.0", // Version placeholder
+    "react-router-dom": "^6.0.0" // Version placeholder
+    // Add other dependencies like tailwindcss, postcss, autoprefixer if used directly
+    // "@headlessui/react", "@heroicons/react", etc.
+  },
+  "scripts": {
+    "start": "echo \"Update this script, e.g., react-scripts start or vite\"",
+    "build": "echo \"Update this script, e.g., react-scripts build or vite build\"",
+    "test": "echo \"Update this script, e.g., react-scripts test or vitest\"",
+    "eject": "echo \"Update this script if using create-react-app\""
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+  // Add devDependencies for things like TailwindCSS, Vite/CRA build tools, etc.
+  // "devDependencies": {
+  //   "tailwindcss": "^3.0.0"
+  // }
+}

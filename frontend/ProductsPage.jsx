@@ -4,7 +4,7 @@ import { Search, Filter, Star, ShoppingCart } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
-import { useCart } from '../context/CartContext'
+import { useCart } from './CartContext'
 
 const ProductsPage = () => {
   const [searchParams, setSearchParams] = useSearchParams()

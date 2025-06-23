@@ -28,13 +28,15 @@ def create_app(config_name=None):
         app.config['JWT_SECRET_KEY'] = 'testsecretkeyfortesting'
         # print(f"########## TESTING JWT_SECRET_KEY: {app.config['JWT_SECRET_KEY']} ##########")
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
-        app.config['JWT_TOKEN_LOCATION'] = ['headers']
-        app.config['JWT_HEADER_NAME'] = 'Authorization'
-        app.config['JWT_HEADER_TYPE'] = 'Bearer'
+        # app.config['JWT_TOKEN_LOCATION'] = ['headers'] # Using default
+        # app.config['JWT_HEADER_NAME'] = 'Authorization' # Using default
+        # app.config['JWT_HEADER_TYPE'] = 'Bearer' # Using default
         app.config['JWT_ALGORITHM'] = "HS256" # Explicitly set algorithm
+        app.config['JWT_DECODE_ALGORITHMS'] = ["HS256"] # Explicitly set decode algorithms for testing
     else: # Default non-testing config
         app.config['JWT_SECRET_KEY'] = 'supersecretkeyfordefault'
         app.config['JWT_ALGORITHM'] = "HS256" # Also set for default
+        app.config['JWT_DECODE_ALGORITHMS'] = ["HS256"] # Also set for default
 
 
     # Initialize extensions

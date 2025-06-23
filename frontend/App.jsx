@@ -3,24 +3,24 @@ import { useState, useEffect } from 'react'
 import './App.css'
 
 // Components
-import Header from './components/Header'
-import Footer from './components/Footer'
+import Header from './Header'
+import Footer from './Footer'
 
 // Pages
-import HomePage from './pages/HomePage'
-import ProductsPage from './pages/ProductsPage'
-import ProductDetailPage from './pages/ProductDetailPage'
-import CartPage from './pages/CartPage'
-import CheckoutPage from './pages/CheckoutPage'
-import OrdersPage from './pages/OrdersPage'
-import OrderDetailPage from './pages/OrderDetailPage'
-import ProfilePage from './pages/ProfilePage'
+import HomePage from './HomePage'
+import ProductsPage from './ProductsPage'
+import ProductDetailPage from './ProductDetailPage'
+import CartPage from './CartPage'
+import CheckoutPage from './CheckoutPage'
+import OrdersPage from './OrdersPage'
+import OrderDetailPage from './OrderDetailPage'
+import ProfilePage from './ProfilePage'
 import LoginPage from './LoginPage' // Import LoginPage
 import RegisterPage from './RegisterPage' // Import RegisterPage
 
 // Context
-import { CartProvider } from './context/CartContext'
-import { AuthProvider } from './context/AuthContext'
+import { CartProvider } from './CartContext'
+import { AuthProvider } from './AuthContext'
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
