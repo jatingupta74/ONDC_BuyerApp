@@ -15,6 +15,8 @@ import CheckoutPage from './pages/CheckoutPage'
 import OrdersPage from './pages/OrdersPage'
 import OrderDetailPage from './pages/OrderDetailPage'
 import ProfilePage from './pages/ProfilePage'
+import LoginPage from './LoginPage' // Import LoginPage
+import RegisterPage from './RegisterPage' // Import RegisterPage
 
 // Context
 import { CartProvider } from './context/CartContext'
@@ -60,6 +62,8 @@ function App() {
                 <Route path="/orders" element={<OrdersPage />} />
                 <Route path="/orders/:id" element={<OrderDetailPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/login" element={<LoginPage />} /> {/* Add login route */}
+                <Route path="/register" element={<RegisterPage />} /> {/* Add register route */}
               </Routes>
             </main>
             <Footer />

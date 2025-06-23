@@ -6,96 +6,99 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
 
-  // Load user from localStorage on mount
+  // Load user and token from localStorage on mount
   useEffect(() => {
-    const savedUser = localStorage.getItem('ondc-user')
-    if (savedUser) {
-      try {
-        const userData = JSON.parse(savedUser)
-        setUser(userData)
-      } catch (error) {
-        console.error('Error loading user from localStorage:', error)
-        localStorage.removeItem('ondc-user')
-      }
-    }
-    setIsLoading(false)
-  }, [])
-
-  // Save user to localStorage whenever it changes
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem('ondc-user', JSON.stringify(user))
+    const token = localStorage.getItem('ondc-token');
+    if (token) {
+      // You might want to verify the token with the backend here
+      // For now, just fetch user profile if token exists
+      fetchUserProfile(token);
     } else {
-      localStorage.removeItem('ondc-user')
+      setIsLoading(false);
     }
-  }, [user])
+  }, []);
 
-  const login = async (email, password) => {
+  const fetchUserProfile = async (token) => {
     try {
-      // Mock login - in production, this would call your API
-      const mockUser = {
-        id: '1',
-        name: 'John Doe',
-        email: email,
-        phone: '+91 9876543210',
-        addresses: [
-          {
-            id: '1',
-            type: 'home',
-            name: 'John Doe',
-            phone: '+91 9876543210',
-            addressLine1: '123 Main Street',
-            addressLine2: 'Apartment 4B',
-            city: 'Bangalore',
-            state: 'Karnataka',
-            pincode: '560001',
-            isDefault: true
-          }
-        ],
-        preferences: {
-          notifications: true,
-          emailUpdates: true,
-          smsUpdates: false
+      const response = await fetch('/api/auth/profile', {
+        headers: {
+          'Authorization': `Bearer ${token}`
         }
+      });
+      if (response.ok) {
+        const userData = await response.json();
+        setUser({ ...userData, token }); // Store token with user data
+        localStorage.setItem('ondc-user', JSON.stringify({ ...userData, token }));
+      } else {
+        // Token might be invalid or expired
+        localStorage.removeItem('ondc-token');
+        localStorage.removeItem('ondc-user');
       }
-
-      setUser(mockUser)
-      return { success: true, user: mockUser }
     } catch (error) {
-      console.error('Login error:', error)
-      return { success: false, error: 'Login failed' }
+      console.error('Error fetching user profile:', error);
+      localStorage.removeItem('ondc-token');
+      localStorage.removeItem('ondc-user');
+    } finally {
+      setIsLoading(false);
     }
-  }
+  };
 
-  const register = async (userData) => {
+  const login = async (username, password) => {
     try {
-      // Mock registration - in production, this would call your API
-      const newUser = {
-        id: Date.now().toString(),
-        name: userData.name,
-        email: userData.email,
-        phone: userData.phone,
-        addresses: [],
-        preferences: {
-          notifications: true,
-          emailUpdates: true,
-          smsUpdates: false
-        }
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        localStorage.setItem('ondc-token', data.access_token);
+        await fetchUserProfile(data.access_token); // Fetch profile after login
+        return { success: true };
+      } else {
+        return { success: false, error: data.msg || 'Login failed' };
       }
-
-      setUser(newUser)
-      return { success: true, user: newUser }
     } catch (error) {
-      console.error('Registration error:', error)
-      return { success: false, error: 'Registration failed' }
+      console.error('Login error:', error);
+      return { success: false, error: 'Login failed' };
     }
-  }
+  };
+
+  const register = async (username, email, password) => {
+    try {
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, email, password }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        return { success: true, message: data.msg };
+      } else {
+        return { success: false, error: data.msg || 'Registration failed' };
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      return { success: false, error: 'Registration failed' };
+    }
+  };
 
   const logout = () => {
-    setUser(null)
-    localStorage.removeItem('ondc-user')
-    localStorage.removeItem('ondc-cart')
-  }
+    setUser(null);
+    localStorage.removeItem('ondc-token');
+    localStorage.removeItem('ondc-user');
+    localStorage.removeItem('ondc-cart'); // Keep cart removal if needed
+  };
+
+  // Save user to localStorage whenever it changes (excluding token if already stored separately)
+  useEffect(() => {
+    if (user) {
+      const { token, ...userDataToStore } = user; // Exclude token before saving to oidc-user
+      localStorage.setItem('ondc-user', JSON.stringify(userDataToStore));
+    } else {
+      localStorage.removeItem('ondc-user');
+    }
+  }, [user]);
 
   const updateProfile = async (updatedData) => {
     try {
