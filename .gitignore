@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.env
+env/
+venv/
+ENV/
+
+# Node
+node_modules/
+dist/
+build/
+.DS_Store
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json # Often committed, but can be ignored if desired
+
+# IDE / Editor specific
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Database
+backend/database/app.db # If you don't want to commit the dev database
+
+# OS generated files
+.DS_Store
+Thumbs.db

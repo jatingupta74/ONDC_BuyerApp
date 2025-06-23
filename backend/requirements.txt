@@ -1,0 +1,19 @@
+# Flask essentials
+Flask
+Flask-Cors
+Flask-JWT-Extended
+Flask-SQLAlchemy
+werkzeug
+
+# Used for password hashing (implicitly by werkzeug, but good to list)
+# bcrypt
+
+# For ONDC example (if requests is used for actual calls)
+requests
+
+# For testing
+pytest
+
+# Other potential dependencies (add as needed)
+# gunicorn (for production deployment)
+# python-dotenv (to load .env files)
